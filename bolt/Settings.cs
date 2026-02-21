@@ -73,7 +73,7 @@ namespace bolt
 					Token[] tokens = Lexer.GenerateTokens (File.ReadAllText (configLocation));
 					Parser.Parse (tokens, this);
 				}
-				catch (Exception e)
+				catch (Exception)
 				{
 					LOAD_FAILED = true;
 				}

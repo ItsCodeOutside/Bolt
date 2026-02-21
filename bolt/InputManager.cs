@@ -31,7 +31,6 @@ namespace bolt
 		};
 		
 		private Bolt bolt;
-		private Thread listenerThread;
 		public bool CancelKeySpread = false;
 		public InputManager (Bolt bolt)
 		{

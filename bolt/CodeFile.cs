@@ -37,7 +37,7 @@ namespace bolt
 				Changed = false;
 				Saved = true;
 			}
-			catch (Exception e) {
+			catch (Exception) {
 				Saved = false;
 			}
 			finally {

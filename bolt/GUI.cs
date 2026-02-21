@@ -24,21 +24,26 @@ namespace bolt
 		}
 
 		private static Thread guiListenerThread;
+		private static volatile bool stopGuiListenerRequested;
 
 		public static void StopGUIEventListener() {
-			if (guiListenerThread != null && guiListenerThread.IsAlive)
-				guiListenerThread.Abort ();
+			if (guiListenerThread != null && guiListenerThread.IsAlive) {
+				stopGuiListenerRequested = true;
+				guiListenerThread.Join();
+			}
 		}
 
 		public static void StartGUIEventListener() {
 			if (guiListenerThread == null || !guiListenerThread.IsAlive) {
+				stopGuiListenerRequested = false;
 				guiListenerThread = new Thread (() => {
-					while (true) {
+					while (!stopGuiListenerRequested) {
 						if (HasSizeChanged ())
 							bolt.SizeChanged ();
 						Thread.Sleep (20);
 					}
 				});
+				guiListenerThread.IsBackground = true;
 				guiListenerThread.Start ();
 			}
 		}
